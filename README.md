@@ -14,6 +14,31 @@ This Go package to load, compose and render HTML templates.
 - various helper functions (e.g. runTemplate to execute template dynamically) 
 
 
+### Example
+
+‘go
+import "github.com/101loops/html"
+
+// specify template source directories, enable auto-reload
+conf := html.Config{Directories: []string{"views"}, AutoReload: true}
+
+// scan for available templates
+loader, _ := html.NewLoader(conf)
+
+// create two sets: a re-usable and a specific one
+baseSet := loader.NewSet().Add("layout", "partials/header", "partials/footer")
+helloSet := loader.NewSet().AddSet(baseSet).Add("pages/hello")
+
+// create executable view, making sure all template placeholders are defined
+view := helloSet.ViewMust()
+
+// execute the template and write the result to a Writer
+http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
+    view.Write(w, "World") 
+})
+‘
+
+
 ### ToDos
  
 - render any error to HTML (+ display snippet of template source)
