@@ -1,0 +1,16 @@
+language: go
+go:
+  - 1.2
+
+before_script:
+  - go get -u github.com/101loops/strutil
+  - go get -u github.com/mattn/goveralls
+  - go get -u code.google.com/p/go.tools/cmd/cover
+
+install:
+  - go get -v -t ./...
+
+script:
+  - go build
+  - go test -v -covermode=count -coverprofile=profile.cov ./...
+  - ~/gopath/bin/goveralls -coverprofile=profile.cov -service=travis-ci
