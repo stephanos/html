@@ -9,9 +9,9 @@ This Go package to load, compose and render HTML templates.
 - **fluent API:** easily build template sets
 - **auto-reloading:** reload templates on page refresh
 - **redefinition:** define a default and overwrite it later 
-- **template validation:** ensure completeness at time of creation (not rendering) 
-- **caching:** templates are only parsed once
+- **validation:** ensure completeness at time of creation (not rendering) 
 - **helper functions:** e.g. use 'runTemplate' to execute an arbitrary template
+- **caching:** templates are only parsed once
 
 
 ### Example
