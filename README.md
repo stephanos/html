@@ -16,7 +16,7 @@ This Go package to load, compose and render HTML templates.
 
 ### Example
 
-‘go
+```go
 import "github.com/101loops/html"
 
 // specify template source directories, enable auto-reload
@@ -36,7 +36,7 @@ view := helloSet.ViewMust()
 http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
     view.Write(w, "World") 
 })
-‘
+```
 
 
 ### ToDos
