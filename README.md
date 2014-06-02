@@ -6,12 +6,12 @@ This Go package to load, compose and render HTML templates.
 
 ### Features
 
-- fluent API for building template sets
-- auto-reloading of templates on rendering
-- caching of parsed template trees
-- allow redefinition of existing templates
-- validate template completeness at time of creation not rendering
-- various helper functions (e.g. runTemplate to execute template dynamically) 
+- **fluent API:** easily build template sets
+- **auto-reloading:** reload templates on page refresh
+- **redefinition:** define a default and overwrite it later 
+- **template validation:** ensure completeness at time of creation (not rendering) 
+- **caching:** templates are only parsed once
+- **helper functions:** e.g. use 'runTemplate' to execute an arbitrary template
 
 
 ### Example
@@ -32,7 +32,7 @@ helloSet := loader.NewSet().AddSet(baseSet).Add("pages/hello")
 // create executable view, making sure all template placeholders are defined
 view := helloSet.ViewMust()
 
-// execute the template and write the result to a Writer
+// execute the template and print the result to a Writer
 http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
     view.Write(w, "World") 
 })
