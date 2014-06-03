@@ -6,7 +6,7 @@ This Go package to load, compose and render HTML templates.
 
 ### Features
 
-- **fluent API:** easily compose template into sets
+- **fluent API:** easily compose templates into sets
 - **auto-reloading:** reload templates on page refresh
 - **redefinition:** define a default and overwrite it later 
 - **validation:** ensure completeness at time of creation (not rendering) 
