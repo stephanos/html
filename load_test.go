@@ -10,7 +10,14 @@ var _ = Describe("Loader", func() {
 
 		Check(err, IsNil)
 		Check(loader, NotNil)
-		Check(loader.Sources(), HasLen, 12)
+		Check(loader.Sources(), HasLen, 14)
+
+		loader.AddFile("my-layout", "layout.html")
+		loader.AddText("my-content", "<h1>My Content</h1>")
+
+		Check(loader.Sources(), HasLen, 16)
+		Check(loader.Sources(), Contains, &Source{Name: "my-layout", FilePath: "layout.html"})
+		Check(loader.Sources(), Contains, &Source{Name: "my-content", Content: "<h1>My Content</h1>"})
 	})
 
 	It("unable to load non-existent directory", func() {

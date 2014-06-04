@@ -54,6 +54,11 @@ var _ = Describe("HTML", func() {
 		out, err = view.HTML()
 		Check(err, IsNil)
 		Check(trim(out), Equals, "dynamic")
+
+		setDynamicTemplate("{{ invalid }}")
+
+		out, err = view.HTML()
+		Check(err, NotNil).And(Contains, `function "invalid" not defined`)
 	})
 
 	It("error for missing template", func() {
@@ -82,5 +87,11 @@ var _ = Describe("HTML", func() {
 
 		_, err = loader.NewSet().Add("layout").View()
 		Check(err, NotNil).And(Contains, `missing template(s) ["content"]`)
+	})
+
+	It("panic for error", func() {
+		Check(func() {
+			loader.NewSet().Add("not-existing").ViewMust()
+		}, Panics)
 	})
 })

@@ -59,11 +59,21 @@ func validateTemplate(root *template.Template) error {
 }
 
 func requiredTemplates(root *parse.ListNode) (names []string) {
+	if root == nil {
+		return
+	}
+
 	for _, node := range root.Nodes {
 		if tnode, ok := node.(*parse.TemplateNode); ok {
 			names = append(names, tnode.Name)
 		} else if lnode, ok := node.(*parse.ListNode); ok {
 			names = append(names, requiredTemplates(lnode)...)
+		} else if bnode, ok := node.(*parse.IfNode); ok {
+			names = append(names, requiredTemplates(bnode.BranchNode.List)...)
+			names = append(names, requiredTemplates(bnode.BranchNode.ElseList)...)
+		} else if bnode, ok := node.(*parse.RangeNode); ok {
+			names = append(names, requiredTemplates(bnode.BranchNode.List)...)
+			names = append(names, requiredTemplates(bnode.BranchNode.ElseList)...)
 		}
 	}
 	return

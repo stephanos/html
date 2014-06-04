@@ -35,8 +35,3 @@ func (v *View) HTML(data ...interface{}) (string, error) {
 	err := v.Write(&doc, data...)
 	return doc.String(), err
 }
-
-// Set returns a copy of the set that created this view.
-func (v *View) Set() *Set {
-	return v.set.clone()
-}
