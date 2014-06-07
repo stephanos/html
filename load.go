@@ -76,12 +76,12 @@ func (l *Loader) scan() error {
 				return nil
 			}
 
-			viewName, err := l.nameForView(dir, path)
+			tmplName, err := l.nameForTemplate(dir, path)
 			if err != nil {
 				return err
 			}
 
-			l.sources[viewName] = &Source{Name: viewName, FilePath: path}
+			l.sources[tmplName] = &Source{Name: tmplName, FilePath: path}
 			return nil
 		})
 
@@ -104,17 +104,17 @@ func (l *Loader) ignoreFile(info os.FileInfo) bool {
 	return false
 }
 
-func (l *Loader) nameForView(dir, path string) (string, error) {
-	viewName, err := filepath.Rel(dir, path)
+func (l *Loader) nameForTemplate(dir, path string) (string, error) {
+	tmplName, err := filepath.Rel(dir, path)
 	if err != nil {
 		return "", err
 	}
 
 	if os.PathSeparator == '\\' {
-		viewName = strings.Replace(viewName, `\`, `/`, -1) // replaces path separator on windows
+		tmplName = strings.Replace(tmplName, `\`, `/`, -1) // replaces path separator on windows
 	}
 
-	return strings.Replace(viewName, ".html", "", 1), nil
+	return strings.ToLower(strings.Replace(tmplName, ".html", "", 1)), nil
 }
 
 // NewSet returns a new initialized set.
