@@ -42,6 +42,7 @@ http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
 ### ToDos
  
 - render any error to HTML (+ display snippet of template source)
+- allow custom template file extension (other than .html)
 - allow custom template parser
 
 

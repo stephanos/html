@@ -72,23 +72,16 @@ func (l *Loader) scan() error {
 				return fileErr
 			}
 
-			fileName := info.Name()
-			ignoreFile := strings.HasPrefix(fileName, "_") || !strings.HasSuffix(fileName, ".html")
-			if info.IsDir() || ignoreFile {
+			if l.ignoreFile(info) {
 				return nil
 			}
 
-			viewName, fileErr := filepath.Rel(dir, path)
-			if fileErr != nil {
-				return fileErr
+			viewName, err := l.nameForView(dir, path)
+			if err != nil {
+				return err
 			}
-			if os.PathSeparator == '\\' {
-				viewName = strings.Replace(viewName, `\`, `/`, -1) // replaces path separator on windows
-			}
-			viewName = strings.Replace(viewName, ".html", "", 1)
 
 			l.sources[viewName] = &Source{Name: viewName, FilePath: path}
-
 			return nil
 		})
 
@@ -98,6 +91,30 @@ func (l *Loader) scan() error {
 	}
 
 	return nil
+}
+
+func (l *Loader) ignoreFile(info os.FileInfo) bool {
+	fileName := info.Name()
+
+	ignoreFile := strings.HasPrefix(fileName, "_") || !strings.HasSuffix(fileName, ".html")
+	if info.IsDir() || ignoreFile {
+		return true
+	}
+
+	return false
+}
+
+func (l *Loader) nameForView(dir, path string) (string, error) {
+	viewName, err := filepath.Rel(dir, path)
+	if err != nil {
+		return "", err
+	}
+
+	if os.PathSeparator == '\\' {
+		viewName = strings.Replace(viewName, `\`, `/`, -1) // replaces path separator on windows
+	}
+
+	return strings.Replace(viewName, ".html", "", 1), nil
 }
 
 // NewSet returns a new initialized set.
