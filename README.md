@@ -4,7 +4,7 @@ html [![Build Status](https://secure.travis-ci.org/101loops/html.png)](https://t
 This Go package can load, compose and render HTML templates. It's a small layer on top of 'html/template'.
 
 
-### Features
+## Features
 
 - **fluent API:** easily compose templates into sets
 - **auto-reloading:** reload templates on page refresh
@@ -14,7 +14,7 @@ This Go package can load, compose and render HTML templates. It's a small layer 
 - **caching:** templates are only parsed once
 
 
-### Example
+## Example
 
 ```go
 import "github.com/101loops/html"
@@ -38,19 +38,21 @@ http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
 })
 ```
 
-
-### ToDos
+## ToDos
  
 - render any error to HTML (+ display snippet of template source)
+- add method to trigger a re-build of all views
 - allow custom template file extension (other than .html)
 - allow custom template parser
 
 
-### Installation
-`go get github.com/101loops/html`
+## Install
+```bash
+go get github.com/101loops/html
+```
 
-### Documentation
+## Documentation
 [godoc.org](http://godoc.org/github.com/101loops/html)
 
-### License
+## License
 MIT (see LICENSE).
